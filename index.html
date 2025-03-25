@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/style.css">
     <title>Lecteur de Playlist</title>
 </head>
 <body>
     <h1>Lecteur de Playlist</h1>
-    <div>
-        <button id="prev">⏮ Précédent</button>
-        <button id="play">▶️ Play / Pause</button>
-        <button id="next">⏭ Suivant</button>
-    </div>
+    <ul id="listImg"></ul>
     <h2 id="track-title">Titre du morceau</h2>
-    <ul id="playlist"></ul>
-    <script src="main.js"></script>
+    <h3 id="track-artist">Artist</h3>
+    <div id="player">
+        <button id="prev"><img src="./public/Group 2.png"></button>
+        <button id="play"><img src="./public/Play.png"></button>
+        <button id="next"><img src="./public/Group 1.png"></button>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+    <script src="https://assets.codepen.io/16327/InertiaPlugin.min.js"></script>
 </body>
 </html>

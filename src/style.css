@@ -1,15 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
+  background-color: black;
 }
 
 ul {
   list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin: 5px 0;
 }
 
 button {
@@ -22,7 +21,23 @@ button {
 #prev {
   margin: 10px;
   padding: 10px;
+  display:flex;
+  background: none;
+  border: none;
+  height: 60px;
 }
+
+#play{
+  margin: 0;
+  height: 80px;
+}
+
+#player{
+  display:flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 
 #track-title {
   font-weight: bold;
@@ -46,4 +61,50 @@ button {
   background: red;
   position: absolute;
   cursor: pointer;
+}
+
+h1{
+  font-family: "Playfair Display", serif;
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+  margin: 40px 0px 80px 0;
+  color: white;
+  opacity: 80%;
+
+}
+
+#track-title{
+  font-family: "Playfair Display", serif;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+  color: white;
+  opacity: 80%;
+
+}
+
+.trackImg{
+  position: absolute;
+  left: 0;
+  margin: 100px auto 50px auto;
+  width: 80%;
+}
+
+#track-artist{
+  font-family: "Playfair Display", serif;
+  font-size: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  color: white;
+  opacity: 80%;
+}
+
+
+#buttons{
+  display: flex;
+  justify-content: space-around;
 }
