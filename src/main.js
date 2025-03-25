@@ -14,9 +14,6 @@ class MusicPlayer {
     this.audio = new Audio();
     this.isPlaying = false;
     this.volume = 0.5;
-    this.gap = 20;
-    this.scrollY = 0;
-    this.initialValue = 0;
     this.init();
   }
 
@@ -27,56 +24,10 @@ init() {
   this.cacheDOM();
   this.bindEvents();
   this.loadTrack();
-  this.setupImages();
-  this.updatePositions();
-  this.initScroll();
-}
-
-setupImages() {
-  this.tracks.forEach(imgCover => {
-    //Créer liste vide
-    const list = document.querySelector('#listImg');
-    const li = document.createElement('li');
-    const cover = document.createElement('img');
-    cover.src = imgCover.img;
-    imgCover.elementImg = cover;
-
-    list.appendChild(li);
-    li.appendChild(cover);
-
-    cover.classList.add('trackImg');
-    
-  });
-
-  this.allImages = document.querySelectorAll('li');
-  this.coverSize = this.allImages[0].getBoundingClientRect().width;
-  console.log(this.allImages.length);
-
-  this.containerSize = this.allImages.length*(this.gap + this.coverSize);
-
-  this.initialValue = this.coverSize + this.gap;
-
-}
-
-updatePositions(){
-  this.tracks.forEach((track, index) => {
-    track.elementImg.style.left = `${(-this.initialValue + (index * (this.coverSize + this.gap) + this.scrollY + this.containerSize) % this.containerSize)}px`;
-
-    
-  });
-}
-
-initScroll(){
-  document.addEventListener('wheel', this.handleScroll.bind(this));
-}
-
-handleScroll(e){
-  this.scrollY += e.wheelDeltaY;
-  console.log(this.scrollY)
-  this.updatePositions();
 }
 
 cacheDOM() {
+  this.playlist = document.querySelector("#playlist");
   this.playButton = document.querySelector("#play");
   this.nextButton = document.querySelector("#next");
   this.prevButton = document.querySelector("#prev");
@@ -99,6 +50,7 @@ if (this.currentTrackIndex < 0 || this.currentTrackIndex >= this.tracks.length) 
 }
 this.audio.src = this.tracks[this.currentTrackIndex].url;
 this.trackTitle.textContent = this.tracks[this.currentTrackIndex].title;
+this.trackImg.src = "./" + this.tracks[this.currentTrackIndex].img;
 this.trackArtist.textContent = this.tracks[this.currentTrackIndex].artist;
 // this.animateTitle();
 }
@@ -112,6 +64,9 @@ togglePlay() {
     this.isPlaying = true
   }
 }
+
+// Challenge : les fonction Next et previous track ont sensiblement le même traitement. En code, on cherche toujours à ne pas dupliquer de la logique, mais plutôt à factoriser.
+// Peux tu créer une seule fonction à la place de deux ? Comment gérerais tu le cas à ce moment ?
 
 nextTrack() {
   this.currentTrackIndex = (this.currentTrackIndex + 1) % this.tracks.length;
@@ -144,18 +99,18 @@ new MusicPlayer();
 // On va utiiser Draggable pour drag n drop les images de notre slider, et passer d'une musique à l'autre
 // https://gsap.com/docs/v3/Plugins/Draggable/
 
-// gsap.registerPlugin(Draggable, InertiaPlugin);
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
-// Draggable.create("#track-img", {
-//   type: "x",
-//   inertia: true,
-//   onClick: function () {
-//     console.log("clicked");
-//   },
-//   onDragEnd: function () {
-//     console.log("drag ended");
-//   },
-// });
+Draggable.create("#track-img", {
+  type: "x",
+  inertia: true,
+  onClick: function () {
+    console.log("clicked");
+  },
+  onDragEnd: function () {
+    console.log("drag ended");
+  },
+});
 
 
 // Tu dois commencer par installer gsap dans ton projet : npm i gsap
