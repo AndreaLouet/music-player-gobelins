@@ -15,6 +15,7 @@ class MusicPlayer {
     this.isPlaying = false;
     this.volume = 0.5;
     this.init();
+    
   }
 
 
