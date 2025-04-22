@@ -108,3 +108,15 @@ h1{
   display: flex;
   justify-content: space-around;
 }
+
+
+#playlist{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.imgCover{
+  width: 300px;
+}

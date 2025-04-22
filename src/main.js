@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
-    
 import { Draggable } from "gsap/Draggable";
+
+gsap.registerPlugin(Draggable);
 
 class MusicPlayer {
   // Explication : Le constructeur est la première fonction lancée quand la Classe est instanciée. On y initialise les propriété, et appelle des fonctions.
@@ -15,7 +16,6 @@ class MusicPlayer {
     this.isPlaying = false;
     this.volume = 0.5;
     this.init();
-    
   }
 
 
@@ -25,6 +25,20 @@ init() {
   this.cacheDOM();
   this.bindEvents();
   this.loadTrack();
+  this.albumCovers();
+  this.setupDraggable();
+}
+
+albumCovers() {
+  this.tracks.forEach(track => {
+    const imgCovers = document.createElement("img");
+    imgCovers.classList.add("imgCover");
+    const listCovers = document.createElement("li");
+    imgCovers.src = track.img;
+    listCovers.appendChild(imgCovers);
+    this.playlist.appendChild(listCovers);
+    track.elementImage = imgCovers;
+  });
 }
 
 cacheDOM() {
@@ -51,7 +65,6 @@ if (this.currentTrackIndex < 0 || this.currentTrackIndex >= this.tracks.length) 
 }
 this.audio.src = this.tracks[this.currentTrackIndex].url;
 this.trackTitle.textContent = this.tracks[this.currentTrackIndex].title;
-this.trackImg.src = "./" + this.tracks[this.currentTrackIndex].img;
 this.trackArtist.textContent = this.tracks[this.currentTrackIndex].artist;
 // this.animateTitle();
 }
@@ -82,9 +95,33 @@ prevTrack() {
 }
 
 changeTrack(){
+  //Ajout de l'anim de slide
   this.loadTrack();
   this.audio.play();
   this.isPlaying = true;
+}
+
+setupDraggable(){
+this.drag = Draggable.create("#playlist", {
+  type: "x",
+  inertia: true,
+  onClick: function () {
+    console.log("clicked");
+  },
+  onDragEnd: () => {
+    console.log("drag ended");
+    console.log(this.drag[0].x)
+    if (this.drag[0].startX - this.drag[0].x > 0) {
+      this.nextTrack();
+    }else{
+      this.prevTrack();
+    }
+
+  },
+});
+
+
+
 }
 }
 
@@ -100,18 +137,6 @@ new MusicPlayer();
 // On va utiiser Draggable pour drag n drop les images de notre slider, et passer d'une musique à l'autre
 // https://gsap.com/docs/v3/Plugins/Draggable/
 
-gsap.registerPlugin(Draggable, InertiaPlugin);
-
-Draggable.create("#track-img", {
-  type: "x",
-  inertia: true,
-  onClick: function () {
-    console.log("clicked");
-  },
-  onDragEnd: function () {
-    console.log("drag ended");
-  },
-});
 
 
 // Tu dois commencer par installer gsap dans ton projet : npm i gsap
