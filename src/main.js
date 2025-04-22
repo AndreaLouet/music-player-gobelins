@@ -89,7 +89,6 @@ nextTrack() {
 
 prevTrack() {
   console.log(this.isPlaying)
-
   this.currentTrackIndex = (this.currentTrackIndex - 1 + this.tracks.length) % this.tracks.length;
   this.changeTrack();
 }
